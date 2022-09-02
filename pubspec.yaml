@@ -11,10 +11,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_localizations:
-    sdk: flutter
   f_yc_utils:
     git: https://github.com/yhfworking/f_yc_utils.git
+  f_yc_config:
+    git: https://github.com/yhfworking/f_yc_config.git
+  vibration: ^1.7.6
 
 dev_dependencies:
   flutter_test:
