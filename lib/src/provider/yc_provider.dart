@@ -1,11 +1,12 @@
 import 'dart:convert';
 import 'package:f_yc_config/f_yc_config.dart';
 import 'package:f_yc_utils/f_yc_utils.dart';
+import 'package:f_yc_widgets/f_yc_widgets.dart';
 import 'package:flutter/foundation.dart';
 import 'yc_base_provider.dart';
 
-class ApisProvider extends ApisBaseProvider {
-  static ApisProvider get to => Get.find();
+class YcApisProvider extends YcApisBaseProvider {
+  static YcApisProvider get to => Get.find();
 
   Future<dynamic> doPost(String path,
       {Map<String, dynamic>? query, bool showLoading = true}) async {
@@ -56,14 +57,14 @@ class ApisProvider extends ApisBaseProvider {
                 String url = adTips['url'] ?? '';
                 String path = adTips['path'] ?? '';
                 if (image.isNotEmpty) {
-                  // Get.dialog(WidgetsAdTips(
-                  //   imageUrl: image,
-                  //   onTap: () {
-                  //     if (path.isNotEmpty) {
-                  //       Get.toNamed(path);
-                  //     } else if (url.isNotEmpty) {}
-                  //   },
-                  // ));
+                  Get.dialog(WidgetsAdTips(
+                    imageUrl: image,
+                    onTap: () {
+                      if (path.isNotEmpty) {
+                        Get.toNamed(path);
+                      } else if (url.isNotEmpty) {}
+                    },
+                  ));
                 }
               });
             }

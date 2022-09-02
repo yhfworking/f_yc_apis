@@ -12,8 +12,8 @@ class YcApisDefault {
         return;
       }
       YcConfig.setLastRemoteConfigTimestamp();
-      Map<String, dynamic>? response =
-          await ApisProvider.to.doPost(apiUriRemoteConfig, showLoading: false);
+      Map<String, dynamic>? response = await YcApisProvider.to
+          .doPost(apiUriRemoteConfig, showLoading: false);
       if (response != null) {
         YcRemoteConfig remoteConfig = YcRemoteConfig.fromJson(response);
         await YcConfig.setRemoteConfig(remoteConfig);
@@ -26,7 +26,7 @@ class YcApisDefault {
     String apiUriWalletInfo = YcConfig.apiUriWalletInfo();
     if (apiUriWalletInfo.isNotEmpty) {
       Map<String, dynamic>? response =
-          await ApisProvider.to.doPost(apiUriWalletInfo);
+          await YcApisProvider.to.doPost(apiUriWalletInfo);
       if (response != null) {
         Map<String, dynamic> walletInfo = response['walletInfo'];
         if (walletInfo.isNotEmpty) {
@@ -42,7 +42,7 @@ class YcApisDefault {
     String apiUriBehaviorInfo = YcConfig.apiUriBehaviorInfo();
     if (apiUriBehaviorInfo.isNotEmpty) {
       Map<String, dynamic>? response =
-          await ApisProvider.to.doPost(apiUriBehaviorInfo, showLoading: true);
+          await YcApisProvider.to.doPost(apiUriBehaviorInfo, showLoading: true);
       if (response != null) {
         Map<String, dynamic> behaviorInfo = response['behaviorInfo'];
         if (behaviorInfo.isNotEmpty) {
@@ -57,7 +57,7 @@ class YcApisDefault {
   static Future<bool> submitCashOut(int amount) async {
     String apiUriSubmitCashOut = YcConfig.apiUriSubmitCashOut();
     if (apiUriSubmitCashOut.isNotEmpty && amount > 0) {
-      Map<String, dynamic>? response = await ApisProvider.to.doPost(
+      Map<String, dynamic>? response = await YcApisProvider.to.doPost(
           apiUriSubmitCashOut,
           query: {"amount": amount.toString()},
           showLoading: true);
@@ -85,7 +85,7 @@ class YcApisDefault {
     String apiUriLogWallet = YcConfig.apiUriLogWallet();
     if (apiUriLogWallet.isNotEmpty) {
       List? response =
-          await ApisProvider.to.doPost(apiUriLogWallet, showLoading: true);
+          await YcApisProvider.to.doPost(apiUriLogWallet, showLoading: true);
       if (response == null) {
         return [];
       }
@@ -98,7 +98,7 @@ class YcApisDefault {
     String apiUriLogCashOut = YcConfig.apiUriLogCashOut();
     if (apiUriLogCashOut.isNotEmpty) {
       List? response =
-          await ApisProvider.to.doPost(apiUriLogCashOut, showLoading: true);
+          await YcApisProvider.to.doPost(apiUriLogCashOut, showLoading: true);
       if (response == null) {
         return [];
       }
@@ -111,7 +111,7 @@ class YcApisDefault {
     String apiUriLogCashOut = YcConfig.apiUriReportAppPraise();
     if (apiUriLogCashOut.isNotEmpty) {
       Map<String, dynamic>? response =
-          await ApisProvider.to.doPost(apiUriLogCashOut, showLoading: false);
+          await YcApisProvider.to.doPost(apiUriLogCashOut, showLoading: false);
       if (response != null) {
         Map<String, dynamic> behaviorInfo = response['behaviorInfo'];
         if (behaviorInfo.isNotEmpty) {
@@ -128,7 +128,7 @@ class YcApisDefault {
     String apiUriReportAdClick = YcConfig.apiUriReportAdClick();
     if (apiUriReportAdClick.isNotEmpty) {
       Future.delayed(const Duration(seconds: 5), () async {
-        Map<String, dynamic>? response = await ApisProvider.to.doPost(
+        Map<String, dynamic>? response = await YcApisProvider.to.doPost(
             apiUriReportAdClick,
             query: {
               "slotID": slotID,
@@ -155,7 +155,7 @@ class YcApisDefault {
     if (apiUriReportRewardAdEvent.isNotEmpty) {
       Future.delayed(const Duration(seconds: 5), () async {
         Map<String, dynamic>? response =
-            await ApisProvider.to.doPost(apiUriReportRewardAdEvent,
+            await YcApisProvider.to.doPost(apiUriReportRewardAdEvent,
                 query: {
                   "slotID": slotID,
                   "adnName": adnName,
@@ -178,8 +178,8 @@ class YcApisDefault {
   static Future<List> queryUserWelfareRe() async {
     String apiUriUserWelfareRe = YcConfig.apiUriUserWelfareRe();
     if (apiUriUserWelfareRe.isNotEmpty) {
-      var response =
-          await ApisProvider.to.doPost(apiUriUserWelfareRe, showLoading: true);
+      var response = await YcApisProvider.to
+          .doPost(apiUriUserWelfareRe, showLoading: true);
       if (response != null) {
         return response;
       }
@@ -190,7 +190,7 @@ class YcApisDefault {
   static Future<bool> receiveUserWelfareRe(int amount, String code) async {
     String apiUriReceiveUserWelfareRe = YcConfig.apiUriReceiveUserWelfareRe();
     if (apiUriReceiveUserWelfareRe.isNotEmpty) {
-      Map<String, dynamic>? response = await ApisProvider.to.doPost(
+      Map<String, dynamic>? response = await YcApisProvider.to.doPost(
           apiUriReceiveUserWelfareRe,
           query: {'amount': amount.toString(), 'code': code},
           showLoading: true);
@@ -211,7 +211,7 @@ class YcApisDefault {
     String apiUriSubmitSign = YcConfig.apiUriSubmitSign();
     if (apiUriSubmitSign.isNotEmpty) {
       Map<String, dynamic>? response =
-          await ApisProvider.to.doPost(apiUriSubmitSign, showLoading: true);
+          await YcApisProvider.to.doPost(apiUriSubmitSign, showLoading: true);
       if (response != null) {
         int amount = response['amount'];
         Map<String, dynamic> walletInfo = response['walletInfo'];
@@ -235,7 +235,7 @@ class YcApisDefault {
   static Future<int> receiveContinuitySign(int days) async {
     String apiUriReceiveContinuitySign = YcConfig.apiUriReceiveContinuitySign();
     if (apiUriReceiveContinuitySign.isNotEmpty) {
-      Map<String, dynamic>? response = await ApisProvider.to.doPost(
+      Map<String, dynamic>? response = await YcApisProvider.to.doPost(
           apiUriReceiveContinuitySign,
           query: {'days': days.toString()},
           showLoading: true);
@@ -262,7 +262,7 @@ class YcApisDefault {
   static Future<int> receiveTimerRewardRe() async {
     String apiUriReceiveTimerRewardRe = YcConfig.apiUriReceiveTimerRewardRe();
     if (apiUriReceiveTimerRewardRe.isNotEmpty) {
-      Map<String, dynamic>? response = await ApisProvider.to
+      Map<String, dynamic>? response = await YcApisProvider.to
           .doPost(apiUriReceiveTimerRewardRe, showLoading: true);
       if (response != null) {
         int amount = response['amount'];

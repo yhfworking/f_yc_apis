@@ -15,6 +15,8 @@ dependencies:
     git: https://github.com/yhfworking/f_yc_utils.git
   f_yc_config:
     git: https://github.com/yhfworking/f_yc_config.git
+  f_yc_widgets:
+    git: https://github.com/yhfworking/f_yc_widgets.git
   vibration: ^1.7.6
 
 dev_dependencies:
