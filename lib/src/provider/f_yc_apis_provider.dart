@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:f_yc_apis/f_yc_apis.dart';
 import 'package:f_yc_config/f_yc_config.dart';
 import 'package:f_yc_utils/f_yc_utils.dart';
 import 'package:flutter/foundation.dart';
@@ -32,7 +33,7 @@ class FYcApisProvider extends GetConnect {
       "isLoading": "true",
       "platform": FYcString.platform(),
       "os": FYcString.os(),
-      "User-Agent": FYcString.ua(),
+      "User-Agent": FYcApi.ua,
       "HOST": apiConfig.host,
       "X-Bce-Signature": _bceApiSignature(apiConfig, uri, query ?? {}),
       "X-Bce-Stage": stage,

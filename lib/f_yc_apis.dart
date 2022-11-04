@@ -9,8 +9,10 @@ import 'src/provider/f_yc_apis_provider.dart';
 
 class FYcApi {
   static FYcApisProvider apisProvider = FYcApisProvider();
+  static String ua = '';
   static initializer(FutureOr<Request> requestInterceptor,
       FutureOr<dynamic> responseInterceptor) async {
+    ua = await FYcString.ua();
     apisProvider = FYcApisProvider();
   }
 }
