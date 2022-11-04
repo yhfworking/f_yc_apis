@@ -13,6 +13,9 @@ class FYcApisProvider extends GetConnect {
       .apiConfig;
   @override
   void onInit() {
+    FYcLogger.write('----host----${apiConfig.host}');
+    FYcLogger.write('----appkey----${apiConfig.appkey}');
+    FYcLogger.write('----appSecret----${apiConfig.appSecret}');
     httpClient.baseUrl = apiConfig.host;
     httpClient
         .addRequestModifier(FYcApisRequestInterceptor.apiRequestInterceptor);
