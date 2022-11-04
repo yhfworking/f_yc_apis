@@ -17,10 +17,10 @@ class FYcApisProvider extends GetConnect {
     FYcLogger.write('----appkey----${apiConfig.appkey}');
     FYcLogger.write('----appSecret----${apiConfig.appSecret}');
     httpClient.baseUrl = apiConfig.host;
-    httpClient
-        .addRequestModifier(FYcApisRequestInterceptor.apiRequestInterceptor);
-    httpClient
-        .addResponseModifier(FYcApisResponseInterceptor.apiResponseInterceptor);
+    // httpClient
+    //     .addRequestModifier(FYcApisRequestInterceptor.apiRequestInterceptor);
+    // httpClient
+    //     .addResponseModifier(FYcApisResponseInterceptor.apiResponseInterceptor);
   }
 
   Future<dynamic> doPost(String uri,
