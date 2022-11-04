@@ -13,14 +13,11 @@ class FYcApisProvider extends GetConnect {
       .apiConfig;
   @override
   void onInit() {
-    FYcLogger.write('----host----${apiConfig.host}');
-    FYcLogger.write('----appkey----${apiConfig.appkey}');
-    FYcLogger.write('----appSecret----${apiConfig.appSecret}');
     httpClient.baseUrl = apiConfig.host;
-    // httpClient
-    //     .addRequestModifier(FYcApisRequestInterceptor.apiRequestInterceptor);
-    // httpClient
-    //     .addResponseModifier(FYcApisResponseInterceptor.apiResponseInterceptor);
+    httpClient
+        .addRequestModifier(FYcApisRequestInterceptor.apiRequestInterceptor);
+    httpClient
+        .addResponseModifier(FYcApisResponseInterceptor.apiResponseInterceptor);
   }
 
   Future<dynamic> doPost(String uri,
@@ -48,7 +45,9 @@ class FYcApisProvider extends GetConnect {
     Response response =
         await post(uri, Map.from({}), query: query ?? {}, headers: baseHeader);
     if (kDebugMode) {
-      FYcLogger.write('【网关请求日志】收到结果:$response');
+      FYcLogger.write('------【开始】【网关请求日志】--------【${response.request!.url}');
+      FYcLogger.write('【网关请求日志】收到结果:${response.body}');
+      FYcLogger.write('------【结束】【网关请求日志】--------【${response.request!.url}');
     }
     if (!GetUtils.isNull(response)) {
       return response.body['data'] ?? Map<String, dynamic>.from({});
