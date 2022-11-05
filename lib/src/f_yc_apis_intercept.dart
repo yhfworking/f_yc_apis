@@ -38,17 +38,8 @@ class FYcAuthInterceptor extends Interceptor {
     });
     log('---key排序--allKeys----$allKeys');
 
-    /// 存储所有键值对
-    List<String> pairs = [];
-
-    /// 添加键值对
-    for (var key in allKeys) {
-      pairs.add("$key${parameter[key]}");
-    }
-    log('-----pairs----$pairs');
-
     /// 数组转string
-    String pairsString = pairs.join("");
+    String pairsString = allKeys.join("");
     log('-----pairsString----$pairsString');
 
     /// 拼接 ABC 是你的秘钥
