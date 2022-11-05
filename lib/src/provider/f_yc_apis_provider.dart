@@ -54,7 +54,7 @@ class FYcApisProvider extends GetConnect {
       FYcLogger.write('【网关请求日志】收到结果:${response.body}');
       FYcLogger.write('------【结束】【网关请求日志】--------【${response.request!.url}');
     }
-    if (!GetUtils.isNull(response)) {
+    if (!GetUtils.isNull(response.body)) {
       return response.body['data'] ?? Map<String, dynamic>.from({});
     }
     return Map<String, dynamic>.from({});
