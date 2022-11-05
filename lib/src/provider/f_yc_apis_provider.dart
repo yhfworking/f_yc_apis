@@ -42,8 +42,13 @@ class FYcApisProvider extends GetConnect {
       baseHeader.addAll(header!);
     }
     EasyLoading.dismiss();
-    Response response =
-        await post(uri, Map.from({}), query: query ?? {}, headers: baseHeader);
+    Response response = await post(
+      uri,
+      Map.from({}),
+      query: query ?? {},
+      headers: baseHeader,
+      contentType: 'application/json; charset=utf-8',
+    );
     if (kDebugMode) {
       FYcLogger.write('------【开始】【网关请求日志】--------【${response.request!.url}');
       FYcLogger.write('【网关请求日志】收到结果:${response.body}');
