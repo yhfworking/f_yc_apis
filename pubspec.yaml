@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_easyloading: ^3.0.5
+  dio: ^4.0.6
   f_yc_config:
     git: https://github.com/yhfworking/f_yc_config.git
   f_yc_utils:
