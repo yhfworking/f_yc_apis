@@ -35,8 +35,8 @@ class FYcApisProvider extends GetConnect {
       "os": FYcString.os(),
       "User-Agent": FYcApi.ua,
       "HOST": apiConfig.host,
-      "X-Bce-Signature": _bceApiSignature(apiConfig, uri, query ?? {}),
-      "X-Bce-Stage": stage,
+      // "X-Bce-Signature": _bceApiSignature(apiConfig, uri, query ?? {}),
+      // "X-Bce-Stage": stage,
     });
     if (!GetUtils.isNull(header)) {
       baseHeader.addAll(header!);
