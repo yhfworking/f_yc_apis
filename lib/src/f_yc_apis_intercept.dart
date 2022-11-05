@@ -12,6 +12,10 @@ class FYcAuthInterceptor extends Interceptor {
         .getConfig(configId: KIT_CONFIG_ID)
         .apiConfig;
     if (apiConfig.appkey.isNotEmpty && apiConfig.appSecret.isNotEmpty) {
+      options.headers['platform'] = apiConfig.commonConfig.platform;
+      options.headers['os'] = apiConfig.commonConfig.os;
+      options.headers['ua'] = apiConfig.commonConfig.ua;
+      options.headers['apiVersion'] = apiConfig.apiVersion;
       options.headers['timestamp'] = DateTime.now().millisecondsSinceEpoch;
       options.headers['appkey'] = apiConfig.appkey;
       options.headers['sign'] = _getSign(options.data, apiConfig.appSecret);
@@ -21,12 +25,6 @@ class FYcAuthInterceptor extends Interceptor {
 
   ///获取接口签名
   String _getSign(Map parameter, String appSecret) {
-    var timestamp = DateTime.now().millisecondsSinceEpoch;
-    log('-----timestamp----$timestamp');
-    var apiVersion = 'api-v1';
-    parameter['timestamp'] = timestamp.toString();
-    parameter['apiVersion'] = apiVersion;
-
     /// 存储所有key
     List<String> allKeys = [];
     parameter.forEach((key, value) {
