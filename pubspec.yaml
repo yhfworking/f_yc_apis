@@ -16,8 +16,6 @@ dependencies:
   crypto: ^3.0.2
   f_yc_config:
     git: https://github.com/yhfworking/f_yc_config.git
-  # f_yc_utils:
-  #   git: https://github.com/yhfworking/f_yc_utils.git
 
 dev_dependencies:
   flutter_test:
