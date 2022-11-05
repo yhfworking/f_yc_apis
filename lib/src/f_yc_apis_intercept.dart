@@ -1,14 +1,66 @@
+import 'dart:convert';
 import 'dart:developer';
+import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
+import 'package:f_yc_config/f_yc_config.dart';
 
 class FYcAuthInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     // 此处根据业务逻辑，自行判断处理
-    if ('token' != '') {
-      options.headers['token'] = 'token';
+    FYcConfigApiConfig apiConfig = FYcConfigConfigurator.instance
+        .getConfig(configId: KIT_CONFIG_ID)
+        .apiConfig;
+    if (apiConfig.appkey.isNotEmpty && apiConfig.appSecret.isNotEmpty) {
+      options.headers['timestamp'] = DateTime.now().millisecondsSinceEpoch;
+      options.headers['appkey'] = apiConfig.appkey;
+      options.headers['sign'] = _getSign(options.data, apiConfig.appSecret);
     }
     super.onRequest(options, handler);
+  }
+
+  ///获取接口签名
+  String _getSign(Map parameter, String appSecret) {
+    var timestamp = DateTime.now().millisecondsSinceEpoch;
+    log('-----timestamp----$timestamp');
+    var apiVersion = 'api-v1';
+    parameter['timestamp'] = timestamp.toString();
+    parameter['apiVersion'] = apiVersion;
+
+    /// 存储所有key
+    List<String> allKeys = [];
+    parameter.forEach((key, value) {
+      allKeys.add(key + value);
+    });
+    log('-----allKeys----$allKeys');
+
+    /// key排序
+    allKeys.sort((obj1, obj2) {
+      return obj1.compareTo(obj2);
+    });
+    log('---key排序--allKeys----$allKeys');
+
+    /// 存储所有键值对
+    List<String> pairs = [];
+
+    /// 添加键值对
+    for (var key in allKeys) {
+      pairs.add("$key${parameter[key]}");
+    }
+    log('-----pairs----$pairs');
+
+    /// 数组转string
+    String pairsString = pairs.join("");
+    log('-----pairsString----$pairsString');
+
+    /// 拼接 ABC 是你的秘钥
+    String sign = appSecret + pairsString + appSecret;
+    log('-----sign----$sign');
+
+    String signString =
+        md5.convert(utf8.encode(sign)).toString().toUpperCase(); //直接写也可以
+    log('-----signString----$signString');
+    return signString;
   }
 }
 

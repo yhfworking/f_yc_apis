@@ -24,13 +24,12 @@ class FYcApisDio {
         .getConfig(configId: KIT_CONFIG_ID)
         .apiConfig;
     final BaseOptions options = BaseOptions(
-      connectTimeout: 15000,
-      receiveTimeout: 15000,
-      sendTimeout: 10000,
-      responseType: ResponseType.plain,
-      validateStatus: (_) => true,
-      baseUrl: apiConfig.host,
-    );
+        connectTimeout: 15000,
+        receiveTimeout: 15000,
+        sendTimeout: 10000,
+        responseType: ResponseType.plain,
+        validateStatus: (_) => true,
+        baseUrl: apiConfig.host);
 
     // 实例化 Dio
     _dio = Dio(options);
