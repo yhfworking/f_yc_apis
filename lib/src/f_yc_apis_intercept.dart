@@ -1,5 +1,6 @@
 import 'dart:convert';
-import 'dart:math';
+import 'dart:developer';
+import 'dart:math' as math;
 import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
 import 'package:f_yc_config/f_yc_config.dart';
@@ -18,7 +19,7 @@ class FYcAuthInterceptor extends Interceptor {
       options.headers['ua'] = apiConfig.commonConfig.ua;
       options.headers['apiVersion'] = apiConfig.apiVersion;
       options.headers['timestamp'] = DateTime.now().millisecondsSinceEpoch;
-      options.headers['nonce'] = _randomNonceString(11);
+      options.headers['nonce'] = _randomNonceString(32);
       options.headers['appkey'] = apiConfig.appkey;
       options.headers['sign'] = _getSign(options.data, apiConfig.appSecret);
     }
@@ -42,7 +43,7 @@ class FYcAuthInterceptor extends Interceptor {
   }
 
   String _randomNonceString(int length) {
-    final random = Random();
+    final random = math.Random();
     const availableChars =
         'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
     final randomString = List.generate(length,
@@ -61,7 +62,7 @@ class LogInterceptor extends Interceptor {
     _startTime = DateTime.now();
     // 此处根据业务逻辑，自行增加 requestUrl requestMethod headers queryParameters 等参数的打印
     if (kDebugMode) {
-      print('---【开始】【接口请求】------【$_startTime】-----------');
+      log('---【开始】【接口请求】------【$_startTime】-----------');
     }
     super.onRequest(options, handler);
   }
@@ -71,7 +72,7 @@ class LogInterceptor extends Interceptor {
     _endTime = DateTime.now();
     final int duration = _endTime.difference(_startTime).inMilliseconds;
     if (kDebugMode) {
-      print('---【结束】【接口请求】------【耗时:$duration毫秒】-----------');
+      log('---【结束】【接口请求】------【耗时:$duration毫秒】-----------');
     }
     super.onResponse(response, handler);
   }
@@ -79,7 +80,7 @@ class LogInterceptor extends Interceptor {
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) {
     if (kDebugMode) {
-      print('---【报错】【接口请求】------【${err.toString()}】-----------');
+      log('---【报错】【接口请求】------【${err.toString()}】-----------');
     }
     super.onError(err, handler);
   }
