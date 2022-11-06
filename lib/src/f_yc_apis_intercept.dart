@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:f_yc_config/f_yc_config.dart';
 import 'package:f_yc_storages/f_yc_storages.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class FYcAuthInterceptor extends Interceptor {
   @override
@@ -23,12 +24,24 @@ class FYcAuthInterceptor extends Interceptor {
       options.headers['nonce'] = _randomNonceString(32);
       options.headers['appkey'] = apiConfig.appkey;
       options.headers['sign'] = _getSign(options.data, apiConfig.appSecret);
-      String userToken = FYcStorages.instance.userToken();
+      String userToken = FYcStorages.userToken();
       if (userToken.isNotEmpty) {
         options.headers['userToken'] = userToken;
       }
     }
     super.onRequest(options, handler);
+  }
+
+  @override
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
+    log('---【onResponse】------【$onResponse-----------');
+    super.onResponse(response, handler);
+  }
+
+  @override
+  void onError(DioError err, ErrorInterceptorHandler handler) {
+    EasyLoading.showError('请求失败，请稍后重试！');
+    super.onError(err, handler);
   }
 
   ///获取接口签名
