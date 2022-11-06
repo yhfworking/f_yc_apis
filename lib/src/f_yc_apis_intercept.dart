@@ -29,9 +29,9 @@ class FYcAuthInterceptor extends Interceptor {
       options.headers['sign'] = _getSign(options.data, apiConfig.appSecret);
       String userToken = FYcStorages.userToken();
       if (userToken.isNotEmpty) {
-        options.headers['userToken'] = userToken;
+        options.headers['token'] = userToken;
       } else {
-        options.headers['userToken'] = '';
+        options.headers['token'] = '';
       }
     }
     super.onRequest(options, handler);
