@@ -30,6 +30,8 @@ class FYcAuthInterceptor extends Interceptor {
       String userToken = FYcStorages.userToken();
       if (userToken.isNotEmpty) {
         options.headers['userToken'] = userToken;
+      } else {
+        options.headers['userToken'] = '';
       }
     }
     super.onRequest(options, handler);
