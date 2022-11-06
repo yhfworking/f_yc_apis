@@ -3,10 +3,13 @@ import 'dart:developer';
 import 'dart:math' as math;
 import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
+import 'package:f_yc_apis/src/f_yc_apis_wrapper.dart';
 import 'package:f_yc_config/f_yc_config.dart';
 import 'package:f_yc_storages/f_yc_storages.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+
+import 'f_yc_apis_ base_response.dart';
 
 class FYcAuthInterceptor extends Interceptor {
   @override
@@ -34,7 +37,23 @@ class FYcAuthInterceptor extends Interceptor {
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    log('---【onResponse】------【$response-----------');
+    FYcApisBaseResponse apisBaseResponse = FYcWrapper.responseWrapper(response);
+    var token = apisBaseResponse.token;
+    var tokenExpired = apisBaseResponse.tokenExpired;
+    if (token.isNotEmpty && tokenExpired > 0) {
+      FYcStorages.setUserToken(token);
+      FYcStorages.setUserTokenExpired(tokenExpired);
+    }
+    if (apisBaseResponse.code == -1) {
+      EasyLoading.showError(apisBaseResponse.msg.isNotEmpty
+          ? apisBaseResponse.msg
+          : '请求失败，请稍后重试！');
+    } else if (apisBaseResponse.code == 30203) {
+      FYcStorages.cleanAllLoginInfo();
+      // Get.offNamed('/login');
+    } else if (apisBaseResponse.code == 501) {
+      EasyLoading.dismiss();
+    }
     super.onResponse(response, handler);
   }
 

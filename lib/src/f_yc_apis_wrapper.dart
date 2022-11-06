@@ -7,6 +7,8 @@ class FYcWrapper {
     return FYcApisBaseResponse(
       code: -1,
       msg: e is DioError ? _dioErrorWrapper(e) : '未知错误',
+      token: '',
+      tokenExpired: 0,
       data: '',
       success: false,
       ores: null,
@@ -36,14 +38,12 @@ class FYcWrapper {
       wrapres.ores = response;
       return wrapres;
     } else {
-      var msg = res["error_description"] ?? '';
-      if (response.statusCode == 401) {
-        msg = 'token失效';
-      }
       return FYcApisBaseResponse(
         code: -1,
         success: false,
-        msg: msg,
+        msg: '请求失败，请稍后重试！',
+        token: '',
+        tokenExpired: 0,
         data: "",
         ores: response,
       );
