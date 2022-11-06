@@ -34,7 +34,7 @@ class FYcAuthInterceptor extends Interceptor {
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    log('---【onResponse】------【$onResponse-----------');
+    log('---【onResponse】------【$response-----------');
     super.onResponse(response, handler);
   }
 
