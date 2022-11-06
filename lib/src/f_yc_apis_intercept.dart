@@ -4,6 +4,7 @@ import 'dart:math' as math;
 import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
 import 'package:f_yc_config/f_yc_config.dart';
+import 'package:f_yc_storages/f_yc_storages.dart';
 import 'package:flutter/foundation.dart';
 
 class FYcAuthInterceptor extends Interceptor {
@@ -22,6 +23,10 @@ class FYcAuthInterceptor extends Interceptor {
       options.headers['nonce'] = _randomNonceString(32);
       options.headers['appkey'] = apiConfig.appkey;
       options.headers['sign'] = _getSign(options.data, apiConfig.appSecret);
+      String userToken = FYcStorages.instance.userToken();
+      if (userToken.isNotEmpty) {
+        options.headers['userToken'] = userToken;
+      }
     }
     super.onRequest(options, handler);
   }

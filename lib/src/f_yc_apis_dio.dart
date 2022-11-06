@@ -67,12 +67,10 @@ class FYcApisDio {
         res = await _dio.get(url, queryParameters: params);
       } else if (method == 'UPLOAD') {
         FormData formData = FormData.fromMap(params);
-        res = await _dio.post(
-          url,
-          data: formData,
-          onSendProgress: onSendProgress,
-          onReceiveProgress: onReceiveProgress,
-        );
+        res = await _dio.post(url,
+            data: formData,
+            onSendProgress: onSendProgress,
+            onReceiveProgress: onReceiveProgress);
       } else {
         res = await _dio.post(
           url,
