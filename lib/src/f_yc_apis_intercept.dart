@@ -24,8 +24,7 @@ class FYcAuthInterceptor extends Interceptor {
       options.headers['ua'] = apiConfig.commonConfig.ua;
       options.headers['apiVersion'] = apiConfig.apiVersion;
       options.headers['timestamp'] = DateTime.now().millisecondsSinceEpoch;
-      options.headers['nonce'] =
-          "H4IPU2dNfJd3U6CIlqS8MLErMjGZ6Hxl"; // _randomNonceString(32);
+      options.headers['nonce'] = _randomNonceString(32);
       options.headers['appkey'] = apiConfig.appkey;
       options.headers['sign'] = _getSign(options.data, apiConfig.appSecret);
       String userToken = FYcStorages.userToken();
