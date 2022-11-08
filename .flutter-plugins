@@ -1,7 +1,14 @@
 # This is a generated file; do not edit or check into version control.
+battery_plus=/Users/yhfwork/flutter/.pub-cache/hosted/pub.flutter-io.cn/battery_plus-3.0.2/
+connectivity_plus=/Users/yhfwork/flutter/.pub-cache/hosted/pub.flutter-io.cn/connectivity_plus-3.0.2/
+device_info_plus=/Users/yhfwork/flutter/.pub-cache/hosted/pub.flutter-io.cn/device_info_plus-8.0.0/
+package_info_plus=/Users/yhfwork/flutter/.pub-cache/hosted/pub.flutter-io.cn/package_info_plus-3.0.1/
 path_provider=/Users/yhfwork/flutter/.pub-cache/hosted/pub.flutter-io.cn/path_provider-2.0.11/
 path_provider_android=/Users/yhfwork/flutter/.pub-cache/hosted/pub.flutter-io.cn/path_provider_android-2.0.21/
 path_provider_ios=/Users/yhfwork/flutter/.pub-cache/hosted/pub.flutter-io.cn/path_provider_ios-2.0.11/
 path_provider_linux=/Users/yhfwork/flutter/.pub-cache/hosted/pub.flutter-io.cn/path_provider_linux-2.1.7/
 path_provider_macos=/Users/yhfwork/flutter/.pub-cache/hosted/pub.flutter-io.cn/path_provider_macos-2.0.6/
 path_provider_windows=/Users/yhfwork/flutter/.pub-cache/hosted/pub.flutter-io.cn/path_provider_windows-2.1.3/
+safe_device=/Users/yhfwork/flutter/.pub-cache/hosted/pub.flutter-io.cn/safe_device-1.1.1/
+trust_location=/Users/yhfwork/flutter/.pub-cache/hosted/pub.flutter-io.cn/trust_location-2.0.13/
+uuid_helper=/Users/yhfwork/flutter/.pub-cache/hosted/pub.flutter-io.cn/uuid_helper-1.0.0/

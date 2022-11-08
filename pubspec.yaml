@@ -13,11 +13,14 @@ dependencies:
     sdk: flutter
   flutter_easyloading: ^3.0.5
   dio: ^4.0.6
-  crypto: ^3.0.2
   f_yc_config:
     git: https://github.com/yhfworking/f_yc_config.git
   f_yc_storages:
     git: https://github.com/yhfworking/f_yc_storages.git
+  f_yc_entity:
+    git: https://github.com/yhfworking/f_yc_entity.git
+  f_yc_utils:
+    git: https://github.com/yhfworking/f_yc_utils.git
 
 dev_dependencies:
   flutter_test:
