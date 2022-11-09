@@ -7,7 +7,7 @@ class FYcWrapper {
     return FYcApisBaseResponse(
       code: -1,
       msg: e is DioError ? _dioErrorWrapper(e) : '未知错误',
-      token: '',
+      unitoken: '',
       tokenExpired: 0,
       data: '',
       success: false,
@@ -42,7 +42,7 @@ class FYcWrapper {
         code: -1,
         success: false,
         msg: '请求失败，请稍后重试！',
-        token: '',
+        unitoken: '',
         tokenExpired: 0,
         data: "",
         ores: response,

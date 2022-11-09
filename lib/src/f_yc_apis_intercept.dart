@@ -1,14 +1,14 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:math' as math;
-import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
 import 'package:f_yc_apis/src/f_yc_apis_wrapper.dart';
 import 'package:f_yc_config/f_yc_config.dart';
 import 'package:f_yc_storages/f_yc_storages.dart';
+// ignore: library_prefixes
+import 'package:f_yc_utils/f_yc_utils.dart' as fycUtils;
 import 'package:flutter/foundation.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-
 import 'f_yc_apis_ base_response.dart';
 
 class FYcAuthInterceptor extends Interceptor {
@@ -29,9 +29,9 @@ class FYcAuthInterceptor extends Interceptor {
       options.headers['sign'] = _getSign(options.data, apiConfig.appSecret);
       String userToken = FYcStorages.userToken();
       if (userToken.isNotEmpty) {
-        options.headers['token'] = userToken;
+        options.headers['unitoken'] = userToken;
       } else {
-        options.headers['token'] = '';
+        options.headers['unitoken'] = '';
       }
     }
     super.onRequest(options, handler);
@@ -40,10 +40,10 @@ class FYcAuthInterceptor extends Interceptor {
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     FYcApisBaseResponse apisBaseResponse = FYcWrapper.responseWrapper(response);
-    var token = apisBaseResponse.token;
+    var unitoken = apisBaseResponse.unitoken;
     var tokenExpired = apisBaseResponse.tokenExpired;
-    if (token.isNotEmpty && tokenExpired > 0) {
-      FYcStorages.setUserToken(token);
+    if (unitoken.isNotEmpty && tokenExpired > 0) {
+      FYcStorages.setUserToken(unitoken);
       FYcStorages.setUserTokenExpired(tokenExpired);
     }
     if (apisBaseResponse.code == -1) {
@@ -51,6 +51,7 @@ class FYcAuthInterceptor extends Interceptor {
           ? apisBaseResponse.msg
           : '请求失败，请稍后重试！');
     } else if (apisBaseResponse.code == 30203) {
+      //unitoken过期
       FYcStorages.cleanAllLoginInfo();
       // Get.offNamed('/login');
     } else if (apisBaseResponse.code == 501) {
@@ -76,8 +77,10 @@ class FYcAuthInterceptor extends Interceptor {
     });
     String pairsString = allKeys.join("");
     String sign = appSecret + pairsString + appSecret;
-    String signString =
-        md5.convert(utf8.encode(sign)).toString().toUpperCase(); //直接写也可以
+    String signString = fycUtils.md5
+        .convert(utf8.encode(sign))
+        .toString()
+        .toUpperCase(); //直接写也可以
     return signString;
   }
 

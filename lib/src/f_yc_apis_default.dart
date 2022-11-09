@@ -46,29 +46,9 @@ class FYcApisDefault {
     return apisBaseResponse.data;
   }
 
-  static Future<Map<String, dynamic>?> mLogin(String uri) async {
-    FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance
-        .post('/api/default/pub_remoteConfig.query', params: {}, tips: true);
-    if (apisBaseResponse.success) {
-      FYcStorages.setUserToken(apisBaseResponse.data['token']);
-      FYcStorages.setUserTokenExpired(apisBaseResponse.data['tokenExpired']);
-
-      FYcStorages.setUserInfo(
-          FYcEntitysUser.fromJson(apisBaseResponse.data['userInfo'] ?? {}));
-      FYcStorages.setBehaviorInfo(FYcEntitysBehavior.fromJson(
-          apisBaseResponse.data['behaviorInfo'] ?? {}));
-      FYcStorages.setWalletInfo(
-          FYcEntitysWallet.fromJson(apisBaseResponse.data['walletInfo'] ?? {}));
-      FYcEventBus.instance.fire(FYcEntitysEventsUserInfoUpdate());
-      FYcEventBus.instance.fire(FYcEntitysEventsBehaviorUpdate());
-      FYcEventBus.instance.fire(FYcEntitysEventsWalletUpdate());
-    }
-    return apisBaseResponse.data;
-  }
-
   static Future<void> logout() async {
     FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance
-        .post('/api/default/pub_remoteConfig.query', params: {}, tips: true);
+        .post('/api/pub_default.logout', params: {}, tips: true);
     if (apisBaseResponse.success) {
       FYcStorages.cleanAllLoginInfo();
       FYcEventBus.instance.fire(FYcEntitysEventsUserInfoUpdate());
