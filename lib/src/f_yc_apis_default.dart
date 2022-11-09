@@ -57,6 +57,8 @@ class FYcApisDefault {
     }
   }
 
+  /////
+
   static Future<void> getWalletInfo() async {
     FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance
         .post('/api/default/pub_remoteConfig.query', params: {}, tips: true);
