@@ -5,7 +5,7 @@ import 'package:f_yc_utils/f_yc_utils.dart';
 import 'f_yc_apis_ base_response.dart';
 
 class FYcApisDefault {
-  static Future<dynamic> appleLogin() async {
+  static Future<Map<String, dynamic>?> appleLogin() async {
     FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance
         .post('/api/pub_auth.appleLogin', params: {}, tips: true);
     if (apisBaseResponse.success) {
@@ -25,7 +25,8 @@ class FYcApisDefault {
     return apisBaseResponse.data;
   }
 
-  static Future<dynamic> wxLogin(String code, {String inviteCode = ''}) async {
+  static Future<Map<String, dynamic>?> wxLogin(String code,
+      {String inviteCode = ''}) async {
     FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance
         .post('/api/pub_auth.wxLogin', params: {}, tips: true);
     if (apisBaseResponse.success) {
