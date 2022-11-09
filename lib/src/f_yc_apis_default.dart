@@ -7,9 +7,9 @@ import 'f_yc_apis_ base_response.dart';
 class FYcApisDefault {
   static Future<dynamic> appleLogin(String uri) async {
     FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance
-        .post('/api/pub_default.appleLogin', params: {}, tips: true);
+        .post('/api/pub_auth.appleLogin', params: {}, tips: true);
     if (apisBaseResponse.success) {
-      FYcStorages.setUserToken(apisBaseResponse.data['token']);
+      FYcStorages.setUserToken(apisBaseResponse.data['unitoken']);
       FYcStorages.setUserTokenExpired(apisBaseResponse.data['tokenExpired']);
 
       FYcStorages.setUserInfo(
@@ -28,9 +28,9 @@ class FYcApisDefault {
   static Future<dynamic> wxLogin(String uri, String code,
       {String inviteCode = ''}) async {
     FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance
-        .post('/api/default/pub_remoteConfig.query', params: {}, tips: true);
+        .post('/api/pub_auth.wxLogin', params: {}, tips: true);
     if (apisBaseResponse.success) {
-      FYcStorages.setUserToken(apisBaseResponse.data['token']);
+      FYcStorages.setUserToken(apisBaseResponse.data['unitoken']);
       FYcStorages.setUserTokenExpired(apisBaseResponse.data['tokenExpired']);
 
       FYcStorages.setUserInfo(
@@ -48,7 +48,7 @@ class FYcApisDefault {
 
   static Future<void> logout() async {
     FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance
-        .post('/api/pub_default.logout', params: {}, tips: true);
+        .post('/api/pub_auth.logout', params: {}, tips: true);
     if (apisBaseResponse.success) {
       FYcStorages.cleanAllLoginInfo();
       FYcEventBus.instance.fire(FYcEntitysEventsUserInfoUpdate());
