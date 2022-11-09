@@ -98,13 +98,16 @@ class FYcAuthInterceptor extends Interceptor {
 class LogInterceptor extends Interceptor {
   late DateTime _startTime;
   late DateTime _endTime;
+  late String _requestPath;
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     _startTime = DateTime.now();
+    _requestPath = options.path;
     // 此处根据业务逻辑，自行增加 requestUrl requestMethod headers queryParameters 等参数的打印
     if (kDebugMode) {
-      log('---【开始】【接口请求】------【$_startTime】-----------');
+      log('---【开始】【接口请求】【$_startTime】---->【$_requestPath】-----');
+      log('---【请求参数】---->【${options.data}】----------');
     }
     super.onRequest(options, handler);
   }
@@ -114,7 +117,8 @@ class LogInterceptor extends Interceptor {
     _endTime = DateTime.now();
     final int duration = _endTime.difference(_startTime).inMilliseconds;
     if (kDebugMode) {
-      log('---【结束】【接口请求】------【耗时:$duration毫秒】-----------');
+      log('---【返回结果】---->【${response.data}】----------');
+      log('---【结束】【接口请求】【耗时:$duration毫秒】---->【$_requestPath】------');
     }
     super.onResponse(response, handler);
   }
