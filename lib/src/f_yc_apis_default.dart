@@ -5,6 +5,26 @@ import 'package:f_yc_utils/f_yc_utils.dart';
 import 'f_yc_apis_ base_response.dart';
 
 class FYcApisDefault {
+  static Future<Map<String, dynamic>?> appleLogin(String uri) async {
+    FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance
+        .post('/api/pub_default.appleLogin', params: {}, tips: true);
+    if (apisBaseResponse.success) {
+      FYcStorages.setUserToken(apisBaseResponse.data['token']);
+      FYcStorages.setUserTokenExpired(apisBaseResponse.data['tokenExpired']);
+
+      FYcStorages.setUserInfo(
+          FYcEntitysUser.fromJson(apisBaseResponse.data['userInfo'] ?? {}));
+      FYcStorages.setBehaviorInfo(FYcEntitysBehavior.fromJson(
+          apisBaseResponse.data['behaviorInfo'] ?? {}));
+      FYcStorages.setWalletInfo(
+          FYcEntitysWallet.fromJson(apisBaseResponse.data['walletInfo'] ?? {}));
+      FYcEventBus.instance.fire(FYcEntitysEventsUserInfoUpdate());
+      FYcEventBus.instance.fire(FYcEntitysEventsBehaviorUpdate());
+      FYcEventBus.instance.fire(FYcEntitysEventsWalletUpdate());
+    }
+    return apisBaseResponse.data;
+  }
+
   static Future<Map<String, dynamic>?> wxLogin(String uri, String code,
       {String inviteCode = ''}) async {
     FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance
@@ -46,26 +66,6 @@ class FYcApisDefault {
     return apisBaseResponse.data;
   }
 
-  static Future<Map<String, dynamic>?> appleLogin(String uri) async {
-    FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance
-        .post('/api/default/pub_remoteConfig.query', params: {}, tips: true);
-    if (apisBaseResponse.success) {
-      FYcStorages.setUserToken(apisBaseResponse.data['token']);
-      FYcStorages.setUserTokenExpired(apisBaseResponse.data['tokenExpired']);
-
-      FYcStorages.setUserInfo(
-          FYcEntitysUser.fromJson(apisBaseResponse.data['userInfo'] ?? {}));
-      FYcStorages.setBehaviorInfo(FYcEntitysBehavior.fromJson(
-          apisBaseResponse.data['behaviorInfo'] ?? {}));
-      FYcStorages.setWalletInfo(
-          FYcEntitysWallet.fromJson(apisBaseResponse.data['walletInfo'] ?? {}));
-      FYcEventBus.instance.fire(FYcEntitysEventsUserInfoUpdate());
-      FYcEventBus.instance.fire(FYcEntitysEventsBehaviorUpdate());
-      FYcEventBus.instance.fire(FYcEntitysEventsWalletUpdate());
-    }
-    return apisBaseResponse.data;
-  }
-
   static Future<void> logout() async {
     FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance
         .post('/api/default/pub_remoteConfig.query', params: {}, tips: true);
@@ -76,21 +76,6 @@ class FYcApisDefault {
       FYcEventBus.instance.fire(FYcEntitysEventsWalletUpdate());
     }
   }
-
-//   static Future<void> queryRemoteConfig() async {
-//     int timestamp = FYcStorages.lastRemoteConfigTimestamp();
-//     if (DateTime.now().millisecondsSinceEpoch - timestamp < 1000 * 60 * 60) {
-//       return;
-//     }
-//     FYcStorages.setLastRemoteConfigTimestamp();
-//     FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance
-//         .post('/api/default/pub_remoteConfig.query', params: {}, tips: true);
-//     if (apisBaseResponse.success) {
-//       FYcEntitysRemoteConfig entitysRemoteConfig =
-//           FYcEntitysRemoteConfig.fromJson(apisBaseResponse.data);
-//       FYcStorages.setRemoteConfig(entitysRemoteConfig);
-//     }
-//   }
 
   static Future<void> getWalletInfo() async {
     FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance
