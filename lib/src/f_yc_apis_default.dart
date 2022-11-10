@@ -22,7 +22,10 @@ class FYcApisDefault {
       FYcEventBus.instance.fire(FYcEntitysEventsBehaviorUpdate());
       FYcEventBus.instance.fire(FYcEntitysEventsWalletUpdate());
     }
-    return apisBaseResponse.data;
+    if (apisBaseResponse.data is Map) {
+      return apisBaseResponse.data;
+    }
+    return Map.from({});
   }
 
   static Future<Map<String, dynamic>?> wxLogin(String code,
@@ -43,7 +46,10 @@ class FYcApisDefault {
       FYcEventBus.instance.fire(FYcEntitysEventsBehaviorUpdate());
       FYcEventBus.instance.fire(FYcEntitysEventsWalletUpdate());
     }
-    return apisBaseResponse.data;
+    if (apisBaseResponse.data is Map) {
+      return apisBaseResponse.data;
+    }
+    return Map.from({});
   }
 
   static Future<void> logout() async {
