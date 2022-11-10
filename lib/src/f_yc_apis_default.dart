@@ -107,7 +107,25 @@ class FYcApisDefault {
     }
   }
 
-/////
+  static Future<List> queryWalletLog() async {
+    FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance
+        .post('/api/pub_user.queryWalletLog', params: {}, tips: true);
+    if (apisBaseResponse.success) {
+      return apisBaseResponse.data;
+    }
+    return [];
+  }
+
+  static Future<List> queryCashOuts() async {
+    FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance
+        .post('/api/pub_user.queryCashOuts', params: {}, tips: true);
+    if (apisBaseResponse.success) {
+      return apisBaseResponse.data;
+    }
+    return [];
+  }
+
+  ///
   static Future<bool> submitCashOut(int amount) async {
     if (amount > 0) {
       FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance.post(
@@ -134,24 +152,6 @@ class FYcApisDefault {
       }
     }
     return false;
-  }
-
-  static Future<List> queryWalletLog() async {
-    FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance
-        .post('/api/default/pub_remoteConfig.query', params: {}, tips: true);
-    if (apisBaseResponse.success) {
-      return apisBaseResponse.data;
-    }
-    return [];
-  }
-
-  static Future<List> queryCashOuts() async {
-    FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance
-        .post('/api/default/pub_remoteConfig.query', params: {}, tips: true);
-    if (apisBaseResponse.success) {
-      return apisBaseResponse.data;
-    }
-    return [];
   }
 
   // static Future<void> reportAdClick(
