@@ -38,12 +38,13 @@ class FYcAuthInterceptor extends Interceptor {
   }
 
   @override
-  void onResponse(Response response, ResponseInterceptorHandler handler) {
+  Future<void> onResponse(
+      Response response, ResponseInterceptorHandler handler) async {
     FYcApisBaseResponse apisBaseResponse = FYcWrapper.responseWrapper(response);
-    var unitoken = apisBaseResponse.unitoken;
+    var refreshToken = apisBaseResponse.refreshToken;
     var tokenExpired = apisBaseResponse.tokenExpired;
-    if (unitoken.isNotEmpty && tokenExpired > 0) {
-      FYcStorages.setUserToken(unitoken);
+    if (refreshToken.isNotEmpty && tokenExpired > 0) {
+      FYcStorages.setUserToken(refreshToken);
       FYcStorages.setUserTokenExpired(tokenExpired);
     }
     if (apisBaseResponse.code == -1) {
@@ -52,8 +53,7 @@ class FYcAuthInterceptor extends Interceptor {
           : '请求失败，请稍后重试！');
     } else if (apisBaseResponse.code == 30203) {
       //unitoken过期
-      FYcStorages.cleanAllLoginInfo();
-      // Get.offNamed('/login');
+      await FYcStorages.cleanAllLoginInfo();
     } else if (apisBaseResponse.code == 501) {
       EasyLoading.dismiss();
     }

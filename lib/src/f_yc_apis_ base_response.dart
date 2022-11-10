@@ -5,7 +5,7 @@ class FYcApisBaseResponse {
   // 通用参数，可根据实际业务修改
   late int code;
   late String msg;
-  late String unitoken;
+  late String refreshToken;
   late int tokenExpired;
   late dynamic data;
   // 业务请求是否成功
@@ -16,7 +16,7 @@ class FYcApisBaseResponse {
   FYcApisBaseResponse({
     required this.code,
     required this.msg,
-    required this.unitoken,
+    required this.refreshToken,
     required this.tokenExpired,
     required this.data,
     required this.success,
@@ -26,7 +26,7 @@ class FYcApisBaseResponse {
   FYcApisBaseResponse.fromJson(dynamic json) {
     code = json?['code'] ?? -1;
     msg = json?['msg'] ?? '';
-    unitoken = json?['unitoken'] ?? '';
+    refreshToken = json?['refreshToken'] ?? '';
     tokenExpired = json?['tokenExpired'] ?? 0;
     data = json?['data'] ?? '';
     success = code == 0 ? true : false;
