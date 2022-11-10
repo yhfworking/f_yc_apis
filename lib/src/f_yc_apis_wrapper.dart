@@ -44,7 +44,7 @@ class FYcWrapper {
         msg: '请求失败，请稍后重试！',
         unitoken: '',
         tokenExpired: 0,
-        data: "",
+        data: '',
         ores: response,
       );
     }

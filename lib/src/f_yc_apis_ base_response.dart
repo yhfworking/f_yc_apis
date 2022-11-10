@@ -28,7 +28,7 @@ class FYcApisBaseResponse {
     msg = json?['msg'] ?? '';
     unitoken = json?['unitoken'] ?? '';
     tokenExpired = json?['tokenExpired'] ?? 0;
-    data = json?['data'] ?? Map.from({});
+    data = json?['data'] ?? '';
     success = code == 0 ? true : false;
   }
 }
