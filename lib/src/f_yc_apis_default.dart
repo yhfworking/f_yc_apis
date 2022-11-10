@@ -58,7 +58,7 @@ class FYcApisDefault {
     FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance
         .post('/api/pub_auth.logout', params: {}, tips: true);
     if (apisBaseResponse.success) {
-      FYcStorages.cleanAllLoginInfo();
+      await FYcStorages.cleanAllLoginInfo();
       FYcEventBus.instance.fire(FYcEntitysEventsUserInfoUpdate());
       FYcEventBus.instance.fire(FYcEntitysEventsBehaviorUpdate());
       FYcEventBus.instance.fire(FYcEntitysEventsWalletUpdate());
