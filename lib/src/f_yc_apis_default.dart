@@ -93,6 +93,20 @@ class FYcApisDefault {
     }
   }
 
+  static Future<void> reportAppPraise() async {
+    FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance
+        .post('/api/pub_user.submitAppPraise', params: {}, tips: true);
+    if (apisBaseResponse.success) {
+      Map<String, dynamic> behaviorInfo = apisBaseResponse.data['behaviorInfo'];
+      if (behaviorInfo.isNotEmpty) {
+        FYcEntitysBehavior entitysBehavior =
+            FYcEntitysBehavior.fromJson(behaviorInfo);
+        FYcStorages.setBehaviorInfo(entitysBehavior);
+        FYcEventBus.instance.fire(FYcEntitysEventsBehaviorUpdate());
+      }
+    }
+  }
+
 /////
   static Future<bool> submitCashOut(int amount) async {
     if (amount > 0) {
@@ -138,20 +152,6 @@ class FYcApisDefault {
       return apisBaseResponse.data;
     }
     return [];
-  }
-
-  static Future<void> reportAppPraise() async {
-    FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance
-        .post('/api/default/pub_remoteConfig.query', params: {}, tips: true);
-    if (apisBaseResponse.success) {
-      Map<String, dynamic> behaviorInfo = apisBaseResponse.data['behaviorInfo'];
-      if (behaviorInfo.isNotEmpty) {
-        FYcEntitysBehavior entitysBehavior =
-            FYcEntitysBehavior.fromJson(behaviorInfo);
-        FYcStorages.setBehaviorInfo(entitysBehavior);
-        FYcEventBus.instance.fire(FYcEntitysEventsBehaviorUpdate());
-      }
-    }
   }
 
   // static Future<void> reportAdClick(
