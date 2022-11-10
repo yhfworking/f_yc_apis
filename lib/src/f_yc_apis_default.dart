@@ -32,7 +32,7 @@ class FYcApisDefault {
       {String inviteCode = ''}) async {
     FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance.post(
         '/api/pub_auth.wxLogin',
-        params: {code: code, inviteCode: inviteCode},
+        params: {"code": code, "inviteCode": inviteCode},
         tips: true);
     if (apisBaseResponse.success) {
       FYcStorages.setUserToken(apisBaseResponse.data['unitoken']);
