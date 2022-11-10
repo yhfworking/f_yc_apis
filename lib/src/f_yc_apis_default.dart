@@ -30,8 +30,10 @@ class FYcApisDefault {
 
   static Future<Map<String, dynamic>?> wxLogin(String code,
       {String inviteCode = ''}) async {
-    FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance
-        .post('/api/pub_auth.wxLogin', params: {code, inviteCode}, tips: true);
+    FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance.post(
+        '/api/pub_auth.wxLogin',
+        params: {code: code, inviteCode: inviteCode},
+        tips: true);
     if (apisBaseResponse.success) {
       FYcStorages.setUserToken(apisBaseResponse.data['unitoken']);
       FYcStorages.setUserTokenExpired(apisBaseResponse.data['tokenExpired']);
