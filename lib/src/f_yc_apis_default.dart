@@ -9,14 +9,15 @@ class FYcApisDefault {
     FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance
         .post('/api/pub_auth.appleLogin', params: {}, tips: true);
     if (apisBaseResponse.success) {
-      FYcStorages.setUserToken(apisBaseResponse.data['unitoken']);
-      FYcStorages.setUserTokenExpired(apisBaseResponse.data['tokenExpired']);
+      await FYcStorages.setUserToken(apisBaseResponse.data['unitoken']);
+      await FYcStorages.setUserTokenExpired(
+          apisBaseResponse.data['tokenExpired']);
 
-      FYcStorages.setUserInfo(
+      await FYcStorages.setUserInfo(
           FYcEntitysUser.fromJson(apisBaseResponse.data['userInfo'] ?? {}));
-      FYcStorages.setBehaviorInfo(FYcEntitysBehavior.fromJson(
+      await FYcStorages.setBehaviorInfo(FYcEntitysBehavior.fromJson(
           apisBaseResponse.data['behaviorInfo'] ?? {}));
-      FYcStorages.setWalletInfo(
+      await FYcStorages.setWalletInfo(
           FYcEntitysWallet.fromJson(apisBaseResponse.data['walletInfo'] ?? {}));
       FYcEventBus.instance.fire(FYcEntitysEventsUserInfoUpdate());
       FYcEventBus.instance.fire(FYcEntitysEventsBehaviorUpdate());
@@ -35,14 +36,14 @@ class FYcApisDefault {
         params: {"code": code, "inviteCode": inviteCode},
         tips: true);
     if (apisBaseResponse.success) {
-      FYcStorages.setUserToken(apisBaseResponse.data['unitoken']);
-      FYcStorages.setUserTokenExpired(apisBaseResponse.data['tokenExpired']);
-
-      FYcStorages.setUserInfo(
+      await FYcStorages.setUserToken(apisBaseResponse.data['unitoken']);
+      await FYcStorages.setUserTokenExpired(
+          apisBaseResponse.data['tokenExpired']);
+      await FYcStorages.setUserInfo(
           FYcEntitysUser.fromJson(apisBaseResponse.data['userInfo'] ?? {}));
-      FYcStorages.setBehaviorInfo(FYcEntitysBehavior.fromJson(
+      await FYcStorages.setBehaviorInfo(FYcEntitysBehavior.fromJson(
           apisBaseResponse.data['behaviorInfo'] ?? {}));
-      FYcStorages.setWalletInfo(
+      await FYcStorages.setWalletInfo(
           FYcEntitysWallet.fromJson(apisBaseResponse.data['walletInfo'] ?? {}));
       FYcEventBus.instance.fire(FYcEntitysEventsUserInfoUpdate());
       FYcEventBus.instance.fire(FYcEntitysEventsBehaviorUpdate());
@@ -72,7 +73,7 @@ class FYcApisDefault {
       Map<String, dynamic> walletInfo = apisBaseResponse.data['walletInfo'];
       if (walletInfo.isNotEmpty) {
         FYcEntitysWallet entitysWallet = FYcEntitysWallet.fromJson(walletInfo);
-        FYcStorages.setWalletInfo(entitysWallet);
+        await FYcStorages.setWalletInfo(entitysWallet);
         FYcEventBus.instance.fire(FYcEntitysEventsWalletUpdate());
       }
     }
@@ -86,7 +87,7 @@ class FYcApisDefault {
       if (behaviorInfo.isNotEmpty) {
         FYcEntitysBehavior entitysBehavior =
             FYcEntitysBehavior.fromJson(behaviorInfo);
-        FYcStorages.setBehaviorInfo(entitysBehavior);
+        await FYcStorages.setBehaviorInfo(entitysBehavior);
         FYcEventBus.instance.fire(FYcEntitysEventsBehaviorUpdate());
       }
     }
