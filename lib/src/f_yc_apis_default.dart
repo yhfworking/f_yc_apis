@@ -144,7 +144,6 @@ class FYcApisDefault {
     });
   }
 
-  ///
   static Future<bool> submitCashOut(int amount) async {
     if (amount > 0) {
       FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance.post(
@@ -197,5 +196,22 @@ class FYcApisDefault {
       return true;
     }
     return false;
+  }
+
+  static Future<Map<String, dynamic>> submitLotteryRe() async {
+    FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance
+        .post('/api/pub_bus.submitLotteryRe', params: {}, tips: true);
+    if (apisBaseResponse.success) {
+      Map<String, dynamic> walletInfo = apisBaseResponse.data['walletInfo'];
+      if (walletInfo.isNotEmpty) {
+        FYcEntitysWallet entitysWallet = FYcEntitysWallet.fromJson(walletInfo);
+        FYcStorages.setWalletInfo(entitysWallet);
+        FYcEventBus.instance.fire(FYcEntitysEventsWalletUpdate());
+      }
+      if (apisBaseResponse.data is Map) {
+        return apisBaseResponse.data;
+      }
+    }
+    return Map.from({});
   }
 }
