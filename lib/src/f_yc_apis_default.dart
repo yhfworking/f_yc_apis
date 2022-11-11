@@ -69,7 +69,7 @@ class FYcApisDefault {
 
   static Future<void> getWalletInfo() async {
     FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance
-        .post('/api/pub_user.getWalletInfo', params: {}, tips: true);
+        .post('/api/pub_wallet.getWalletInfo', params: {}, tips: true);
     if (apisBaseResponse.success) {
       Map<String, dynamic> walletInfo = apisBaseResponse.data['walletInfo'];
       if (walletInfo.isNotEmpty) {
@@ -110,7 +110,7 @@ class FYcApisDefault {
 
   static Future<List> queryWalletLog() async {
     FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance
-        .post('/api/pub_user.queryWalletLog', params: {}, tips: true);
+        .post('/api/pub_wallet.queryWalletLog', params: {}, tips: true);
     if (apisBaseResponse.success) {
       return apisBaseResponse.data;
     }
@@ -119,7 +119,7 @@ class FYcApisDefault {
 
   static Future<List> queryCashOuts() async {
     FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance
-        .post('/api/pub_user.queryCashOuts', params: {}, tips: true);
+        .post('/api/pub_wallet.queryCashOuts', params: {}, tips: true);
     if (apisBaseResponse.success) {
       return apisBaseResponse.data;
     }
@@ -145,7 +145,7 @@ class FYcApisDefault {
   static Future<bool> submitCashOut(int amount) async {
     if (amount > 0) {
       FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance.post(
-          '/api/default/pub_remoteConfig.query',
+          '/api/pub_wallet.submitCashOut',
           params: {amount: amount.toString()},
           tips: true);
       if (apisBaseResponse.success) {
@@ -172,7 +172,7 @@ class FYcApisDefault {
 
   static Future<List> queryUserWelfareRe() async {
     FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance
-        .post('/api/pub_wallet.queryUserWelfareRe', params: {}, tips: true);
+        .post('/api/pub_user.queryUserWelfareRe', params: {}, tips: true);
     if (apisBaseResponse.success) {
       return apisBaseResponse.data;
     }
@@ -181,7 +181,7 @@ class FYcApisDefault {
 
   static Future<bool> receiveUserWelfareRe(int amount, String code) async {
     FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance.post(
-        '/api/pub_wallet.receiveUserWelfareRe',
+        '/api/pub_user.receiveUserWelfareRe',
         params: {amount: amount.toString(), code: code},
         tips: true);
     if (apisBaseResponse.success) {
