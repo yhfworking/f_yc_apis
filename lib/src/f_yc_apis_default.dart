@@ -129,9 +129,12 @@ class FYcApisDefault {
   static Future<void> submitAdClick(
       {String slotID = '', String adnName = '', String adnSlotID = ''}) async {
     Future.delayed(const Duration(seconds: 5), () async {
-      FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance.post(
-          '/api/pub_ad.submitAdClick',
-          params: {slotID: slotID, adnName: adnName, adnSlotID: adnSlotID});
+      FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance
+          .post('/api/pub_ad.submitAdClick', params: {
+        "slotID": slotID,
+        "adnName": adnName,
+        "adnSlotID": adnSlotID
+      });
       if (apisBaseResponse.success) {
         bool isReward = apisBaseResponse.data['isReward'];
         if (isReward && (await Vibration.hasVibrator() ?? false)) {
@@ -146,7 +149,7 @@ class FYcApisDefault {
     if (amount > 0) {
       FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance.post(
           '/api/pub_wallet.submitCashOut',
-          params: {amount: amount},
+          params: {"amount": amount},
           tips: true);
       if (apisBaseResponse.success) {
         Map<String, dynamic> walletInfo = apisBaseResponse.data['walletInfo'];
@@ -182,7 +185,7 @@ class FYcApisDefault {
   static Future<bool> receiveUserWelfareRe(int amount, String code) async {
     FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance.post(
         '/api/pub_user.receiveUserWelfareRe',
-        params: {amount: amount.toString(), code: code},
+        params: {"amount": amount, "code": code},
         tips: true);
     if (apisBaseResponse.success) {
       Map<String, dynamic> walletInfo = apisBaseResponse.data['walletInfo'];
