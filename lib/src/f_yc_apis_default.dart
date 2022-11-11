@@ -146,7 +146,7 @@ class FYcApisDefault {
     if (amount > 0) {
       FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance.post(
           '/api/pub_wallet.submitCashOut',
-          params: {amount: amount.toString()},
+          params: {amount: amount},
           tips: true);
       if (apisBaseResponse.success) {
         Map<String, dynamic> walletInfo = apisBaseResponse.data['walletInfo'];
