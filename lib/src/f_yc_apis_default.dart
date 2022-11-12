@@ -217,4 +217,33 @@ class FYcApisDefault {
     }
     return Map.from({});
   }
+
+  static Future<int> receiveTimerRewardRe() async {
+    FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance
+        .post('/api/pub_bus.submitLotteryRe', params: {}, tips: true);
+    if (apisBaseResponse.success) {
+      int amount = apisBaseResponse.data['amount'];
+      if (apisBaseResponse.data.containsKey('walletInfo')) {
+        Map<String, dynamic> walletInfo = apisBaseResponse.data['walletInfo'];
+        if (walletInfo.isNotEmpty) {
+          FYcEntitysWallet entitysWallet =
+              FYcEntitysWallet.fromJson(walletInfo);
+          await FYcStorages.setWalletInfo(entitysWallet);
+          FYcEventBus.instance.fire(FYcEntitysEventsWalletUpdate());
+        }
+      }
+      if (apisBaseResponse.data.containsKey('behaviorInfo')) {
+        Map<String, dynamic> behaviorInfo =
+            apisBaseResponse.data['behaviorInfo'];
+        if (behaviorInfo.isNotEmpty) {
+          FYcEntitysBehavior entitysBehavior =
+              FYcEntitysBehavior.fromJson(behaviorInfo);
+          await FYcStorages.setBehaviorInfo(entitysBehavior);
+          FYcEventBus.instance.fire(FYcEntitysEventsWalletUpdate());
+        }
+      }
+      return amount;
+    }
+    return 0;
+  }
 }
