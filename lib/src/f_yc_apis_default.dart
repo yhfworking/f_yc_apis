@@ -202,11 +202,14 @@ class FYcApisDefault {
     FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance
         .post('/api/pub_bus.submitLotteryRe', params: {}, tips: true);
     if (apisBaseResponse.success) {
-      Map<String, dynamic> walletInfo = apisBaseResponse.data['walletInfo'];
-      if (walletInfo.isNotEmpty) {
-        FYcEntitysWallet entitysWallet = FYcEntitysWallet.fromJson(walletInfo);
-        FYcStorages.setWalletInfo(entitysWallet);
-        FYcEventBus.instance.fire(FYcEntitysEventsWalletUpdate());
+      if (apisBaseResponse.data.containsKey('walletInfo')) {
+        Map<String, dynamic> walletInfo = apisBaseResponse.data['walletInfo'];
+        if (walletInfo.isNotEmpty) {
+          FYcEntitysWallet entitysWallet =
+              FYcEntitysWallet.fromJson(walletInfo);
+          FYcStorages.setWalletInfo(entitysWallet);
+          FYcEventBus.instance.fire(FYcEntitysEventsWalletUpdate());
+        }
       }
       if (apisBaseResponse.data is Map) {
         return apisBaseResponse.data;
