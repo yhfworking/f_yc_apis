@@ -144,6 +144,32 @@ class FYcApisDefault {
     });
   }
 
+  static Future<void> submitAdReward(
+      {String slotID = '',
+      String adnName = '',
+      String adnSlotID = '',
+      String customData = ''}) async {
+    Future.delayed(const Duration(seconds: 5), () async {
+      FYcApisBaseResponse apisBaseResponse =
+          await FYcApisDio.instance.post('/api/pub_ad.submitAdReward', params: {
+        "slotID": slotID,
+        "adnName": adnName,
+        "adnSlotID": adnSlotID,
+        "customData": customData
+      });
+      if (apisBaseResponse.success) {
+        Map<String, dynamic> behaviorInfo =
+            apisBaseResponse.data['behaviorInfo'];
+        if (behaviorInfo.isNotEmpty) {
+          FYcEntitysBehavior entitysBehavior =
+              FYcEntitysBehavior.fromJson(behaviorInfo);
+          FYcStorages.setBehaviorInfo(entitysBehavior);
+          FYcEventBus.instance.fire(FYcEntitysEventsBehaviorUpdate());
+        }
+      }
+    });
+  }
+
   static Future<bool> submitCashOut(int amount) async {
     if (amount > 0) {
       FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance.post(
