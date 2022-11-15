@@ -246,7 +246,7 @@ class FYcApisDefault {
 
   static Future<int> receiveTimerRewardRe() async {
     FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance
-        .post('/api/pub_bus.submitLotteryRe', params: {}, tips: true);
+        .post('/api/pub_bus.receiveTimerRewardRe', params: {}, tips: true);
     if (apisBaseResponse.success) {
       int amount = apisBaseResponse.data['amount'];
       if (apisBaseResponse.data.containsKey('walletInfo')) {
