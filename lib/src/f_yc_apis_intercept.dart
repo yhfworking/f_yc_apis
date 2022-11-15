@@ -76,9 +76,7 @@ class FYcAuthInterceptor extends Interceptor {
       return obj1.compareTo(obj2);
     });
     String pairsString = allKeys.join("");
-    log('---pairsString---$pairsString');
     String sign = appSecret + pairsString + appSecret;
-    log('---sign---$sign');
     String signString = fycUtils.md5
         .convert(utf8.encode(sign))
         .toString()
