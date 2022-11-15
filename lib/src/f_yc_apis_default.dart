@@ -129,11 +129,11 @@ class FYcApisDefault {
   static Future<void> submitAdClick(
       {String slotID = '', String adnName = '', String adnSlotID = ''}) async {
     Future.delayed(const Duration(seconds: 5), () async {
-      FYcApisBaseResponse apisBaseResponse = await FYcApisDio.instance
-          .post('/api/pub_ad.submitAdClick', params: {
-        "slotID": slotID,
+      FYcApisBaseResponse apisBaseResponse =
+          await FYcApisDio.instance.post('/api/pub_ad.submitAdClick', params: {
+        "slotID": slotID.toString(),
         "adnName": adnName,
-        "adnSlotID": adnSlotID
+        "adnSlotID": adnSlotID.toString()
       });
       if (apisBaseResponse.success) {
         bool isReward = apisBaseResponse.data['isReward'];
@@ -152,9 +152,9 @@ class FYcApisDefault {
     Future.delayed(const Duration(seconds: 5), () async {
       FYcApisBaseResponse apisBaseResponse =
           await FYcApisDio.instance.post('/api/pub_ad.submitAdReward', params: {
-        "slotID": slotID,
+        "slotID": slotID.toString(),
         "adnName": adnName,
-        "adnSlotID": adnSlotID,
+        "adnSlotID": adnSlotID.toString(),
         "customData": customData
       });
       if (apisBaseResponse.success) {
